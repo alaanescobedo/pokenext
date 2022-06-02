@@ -43,9 +43,9 @@ const patch = async <T>({ endpoint, body, headers = {} }: PatchParams): Promise<
 
 const handleResponse = async (response: any) => {
   const data = await response.json()
-  if (response.error || !response.ok) {
-    const error = data || response.statusText
-    throw new Error(`${response.status}: ${error}`)
+  if (response.ok === false) {
+    const error = data
+    throw new Error(`${error.data.message}`)
   }
   return data
 }
