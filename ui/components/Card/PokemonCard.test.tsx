@@ -17,9 +17,10 @@ const mockBasicPokemonData = {
 }
 
 describe('PokemonCard', () => {
-  it('should render', () => {
+  it('should render the pokemon name', () => {
     render(<PokemonCard pokemon={mockBasicPokemonData} />)
-    screen.getByText(mockBasicPokemonData.name)
+    const pokemonName = screen.getByText(mockBasicPokemonData.name)
+    expect(pokemonName).toBeInTheDocument()
   })
   it('shoudl redirect to the pokemon page if click in CardActionArea', () => {
     (useRouter as jest.Mock).mockReturnValue(mockRouter)
@@ -27,9 +28,6 @@ describe('PokemonCard', () => {
     render(<PokemonCard pokemon={mockBasicPokemonData} />)
     const cardActionArea = screen.getAllByRole('button')[0]
     cardActionArea.click()
-
-
     expect(mockRouter.push).toHaveBeenCalledWith(`/name/${mockBasicPokemonData.name}`)
-
   })
 })

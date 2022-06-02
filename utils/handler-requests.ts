@@ -41,7 +41,7 @@ const patch = async <T>({ endpoint, body, headers = {} }: PatchParams): Promise<
   return await handleResponse(res)
 }
 
-const handleResponse = async (response: any) => {
+const handleResponse = async (response: Response) => {
   const data = await response.json()
   if (response.ok === false) {
     const error = data

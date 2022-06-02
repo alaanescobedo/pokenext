@@ -1,4 +1,4 @@
-import { POKE_API_BASIC_DATA_URL, POKE_API_FULL_DATA_URL } from '../setup/pokemon.constants'
+import { POKE_API_BASE_URL } from '../setup/pokemon.constants'
 import HandlerRequest from './handler-requests'
 import { getBasicAllPokemonsData, getFullPokemonData } from './pokemon-request'
 
@@ -28,7 +28,7 @@ describe('@utils - pokemon-request', () => {
     handlerGetSpy.mockResolvedValueOnce(mockBasicPokemonListResponse)
 
     const res = await getBasicAllPokemonsData()
-    expect(handlerGetSpy).toHaveBeenCalledWith({ endpoint: POKE_API_BASIC_DATA_URL })
+    expect(handlerGetSpy).toHaveBeenCalledWith({ endpoint: `${POKE_API_BASE_URL}/pokemon` })
     expect(handlerGetSpy).toHaveBeenCalledTimes(1)
     expect(res).toEqual(mockBasicPokemonListResponse.results)
   })
@@ -37,7 +37,7 @@ describe('@utils - pokemon-request', () => {
 
     const query = 'bulbasaur'
     const res = await getFullPokemonData({ query })
-    expect(handlerGetSpy).toHaveBeenCalledWith({ endpoint: `${POKE_API_FULL_DATA_URL}/${query}` })
+    expect(handlerGetSpy).toHaveBeenCalledWith({ endpoint: `${POKE_API_BASE_URL}/pokemon/${query}` })
     expect(handlerGetSpy).toHaveBeenCalledTimes(1)
     expect(res).toEqual(mockFullPokemonResponse)
   })

@@ -30,6 +30,7 @@ export const PokemonCard = ({ pokemon }: CardProps) => {
             height='180'
             width='180'
             objectFit='contain'
+            alt={pokemon.name}
           />
         </CardMedia>
         <CardContent>

@@ -6,11 +6,10 @@ interface PokemonListProps {
   pokemons: PokeListResult[]
 }
 export const ListCard = ({ pokemons }: PokemonListProps) => {
-
   return (
     <Grid container spacing={2} justifyContent='flex-start'>
       {pokemons.map((pokemon) => (
-        <Grid item xs={6} sm={3} md={2} key={pokemon.name}>
+        <Grid item xs={6} sm={3} md={2} key={pokemon.name} data-testid='list-item' >
           <PokemonCard pokemon={pokemon} />
         </Grid>
       ))}
