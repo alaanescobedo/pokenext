@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
-import { PokemonCard } from './PokemonCard'
 import { useRouter } from 'next/router'
+import { render, screen } from '../../test-dom-utils'
+import { PokemonCard } from './PokemonCard'
 
 // TODO: Create a mock-file to put the mock data in
 jest.mock('next/router', () => ({

@@ -20,7 +20,7 @@ export default PokemonByNamePage
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const results = await getBasicAllPokemonsData()
-    const pokeNames = results?.map(({ name }) => name)
+    const pokeNames = results.map(({ name }) => name)
 
     return {
       paths: pokeNames.map(name => ({ params: { name } })),

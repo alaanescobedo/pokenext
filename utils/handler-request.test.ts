@@ -1,80 +1,50 @@
+import { TestResponse } from '../setup/constants/tests.requests'
 import HandlerRequest from './handler-requests'
 
-interface TestResponse {
-  status: number
-  data: any
-}
+type SuccessResponse = typeof TestResponse.Success
 
-const mockResSuccessData = {
-  status: 200,
-  statusText: 'Success',
-  data: {
-    message: 'Ok'
-  },
-  ok: true
-}
-
-const mockResErrorData = {
-  status: 404,
-  statusText: 'Error',
-  data: {
-    message: 'Fail'
-  },
-  ok: false
-}
-
-global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-  json: () => Promise.resolve(mockResSuccessData),
-  status: 200,
-  ok: true,
+const generateMockResponse = ({ resolve, ok }: { resolve: any, ok: boolean }) => jest.fn().mockImplementation(() => Promise.resolve({
+  json: () => Promise.resolve(resolve),
+  ok,
 }))
 
 describe('@utils - HandlerRequest', () => {
 
-
   describe('Success Operations', () => {
     beforeAll(() => {
-      global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-        json: () => Promise.resolve(mockResSuccessData),
-        ok: true,
-      }))
+      global.fetch = generateMockResponse({ resolve: TestResponse.Success, ok: true })
     })
 
     it('.get - should return a success response', async () => {
-      const { data, status } = await HandlerRequest.get<TestResponse>({ endpoint: '/test' })
-
-      expect(status).toBe(mockResSuccessData.status)
-      expect(data).toEqual(mockResSuccessData.data)
+      const { status, data } = await HandlerRequest.get<SuccessResponse>({ endpoint: '/test' })
+      expect(status).toBe(TestResponse.Success.status)
+      expect(data).toEqual(TestResponse.Success.data)
     })
     it('.post - should return a success response', async () => {
-      const { data, status } = await HandlerRequest.post<TestResponse>({ endpoint: '/test' })
+      const { data, status } = await HandlerRequest.post<SuccessResponse>({ endpoint: '/test' })
 
-      expect(status).toBe(mockResSuccessData.status)
-      expect(data).toEqual(mockResSuccessData.data)
+      expect(status).toBe(TestResponse.Success.status)
+      expect(data).toEqual(TestResponse.Success.data)
     })
     it('.patch - should return a success response', async () => {
-      const { data, status } = await HandlerRequest.patch<TestResponse>({ endpoint: '/test', body: {} })
+      const { data, status } = await HandlerRequest.patch<SuccessResponse>({ endpoint: '/test', body: {} })
 
-      expect(status).toBe(mockResSuccessData.status)
-      expect(data).toEqual(mockResSuccessData.data)
+      expect(status).toBe(TestResponse.Success.status)
+      expect(data).toEqual(TestResponse.Success.data)
     })
   })
 
   describe('Error Operations', () => {
     beforeAll(() => {
-      global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-        json: () => Promise.resolve(mockResErrorData),
-        status: 404,
-        ok: false,
-      }))
+      global.fetch = generateMockResponse({ resolve: TestResponse.Error, ok: false })
     })
 
     it('HandleResponse - should return a error response', async () => {
       try {
-        await HandlerRequest.get<TestResponse>({ endpoint: '/test' })
+        await HandlerRequest.get({ endpoint: '/test' })
       } catch (error) {
         if (error instanceof Error) {
-          expect(error.message).toBe(mockResErrorData.data.message)
+          expect(error.message).toBe(TestResponse.Error.data.message)
           expect(error.name).toBe('Error')
           expect(global.fetch).toHaveBeenCalledTimes(1)
         }

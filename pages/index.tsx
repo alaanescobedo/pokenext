@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next'
 import { ListCard } from '../ui/components/List/ListPokemonCard'
 import { AppLayout } from '../ui/layout/AppLayout'
-import { POKE_API_CARD_IMG_URL } from '../setup/pokemon.constants'
+import { POKE_API_CARD_IMG_URL } from '../setup/constants/pokemon'
 import { getBasicAllPokemonsData } from '../utils/pokemon-request'
 import styles from '../styles/Home.module.css'
 
@@ -10,7 +10,6 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ pokemons }: HomeProps) => {
-  console.log('INDEX', { pokemons })
   return (
     <div className={styles.container}>
       <AppLayout pageTitle='PokeApp' pageDescription='List of all the pokimons'>

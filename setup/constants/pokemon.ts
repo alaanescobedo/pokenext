@@ -1,9 +1,6 @@
 export const POKE_API_BASE_URL = 'https://pokeapi.co/api/v2'
 export const POKE_API_CARD_IMG_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world'
 
-export const POKE_API_BASIC_DATA_URL = `${POKE_API_BASE_URL}/pokemons`
-export const POKE_API_FULL_DATA_URL = `${POKE_API_BASE_URL}/pokemon`
-
 export const POKE_API_POKEMON_COLOR = 'https://pokeapi.co/api/v2/pokemon-color'
 
 export enum POKEMON_TYPE_COLORS {
